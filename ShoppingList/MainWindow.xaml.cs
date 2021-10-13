@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ShoppingList.Classes;
 
 namespace ShoppingList
 {
@@ -20,9 +21,24 @@ namespace ShoppingList
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Dish> dishList = new List<Dish>();
+        List<string> productList = new List<String>();
         public MainWindow()
         {
             InitializeComponent();
+            dishList.Add(new Dish("Pizza", "ciasto", "salami", "ser"));
+            dishList.Add(new Dish("Spaghetti", "makaron", "sos", "mięsko"));
+
+            foreach (Dish dish in dishList)
+            {
+                foreach (Product product in dish.Products)
+                {
+                    productList.Add(product.Name);
+                }
+            }
+
+            dishListView.ItemsSource = dishList;
+            productListView.ItemsSource = productList;
         }
     }
 }
