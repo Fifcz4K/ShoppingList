@@ -55,7 +55,8 @@ namespace ShoppingList
 
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AddIngredientWindow addIngredientWindow = new AddIngredientWindow();
+            addIngredientWindow.Show();
         }
 
         private void saveDatabaseButton_Click(object sender, RoutedEventArgs e)
