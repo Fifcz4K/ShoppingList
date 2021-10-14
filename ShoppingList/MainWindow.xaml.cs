@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ShoppingList.Classes;
 
 namespace ShoppingList
 {
@@ -21,27 +20,20 @@ namespace ShoppingList
     /// </summary>
     public partial class MainWindow : Window
     {
-        static List<Dish> dishList = new List<Dish>();
-        static List<Ingredient> allIngredients = new List<Ingredient>();
         public MainWindow()
         {
             InitializeComponent();
-            dishList.Add(new Dish("Pizza", new Ingredient("Ciasto", IngredientCategory.Bread), new Ingredient("Salami", IngredientCategory.Meat), new Ingredient("Ser", IngredientCategory.Dairy)));
-            dishList.Add(new Dish("Burger", new Ingredient("Bułki", IngredientCategory.Bread), new Ingredient("Mięso wołowe", IngredientCategory.Meat), new Ingredient("Ser", IngredientCategory.Dairy)));
-
-            dishListView.ItemsSource = dishList;
-            ingredientListView.ItemsSource = allIngredients;
         }
 
-        static private void updateIngredientList()
+        private void updateDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Dish dish in dishList)
-            {
-                foreach (Ingredient ingredient in dish.GetIngredientList())
-                {
-                    allIngredients.Add(ingredient);
-                }
-            }
+            DishDatabaseWindow dishDatabaseWindow = new DishDatabaseWindow();
+            dishDatabaseWindow.Show();
+        }
+
+        private void scheduleButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

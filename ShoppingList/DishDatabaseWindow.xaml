@@ -1,0 +1,54 @@
+﻿<Window x:Class="ShoppingList.DishDatabaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShoppingList"
+        mc:Ignorable="d"
+        Title="DishDatabaseWindow" Height="450" Width="800">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="5">
+                <ListView x:Name="dishListView"
+                          Height="265"
+                          SelectionChanged="dishListView_SelectionChanged">
+                </ListView>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        Margin="80 0"
+                        VerticalAlignment="Center">
+                <Button Content="Add dish"
+                        Margin="20 5"
+                        x:Name="addDishButton"/>
+                <Button Content="Save"
+                        Margin="20 5"
+                        x:Name="saveDatabaseButton"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1"
+              Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="50 5 5 5">
+                <ListView x:Name="ingredientListView"
+                      Height="300">
+                </ListView>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        Margin="125 0 80 0">
+                <Button Content="Add ingredient"
+                        Margin="5"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
