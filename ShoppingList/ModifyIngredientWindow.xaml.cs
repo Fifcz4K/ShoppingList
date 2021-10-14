@@ -16,30 +16,14 @@ using System.Windows.Shapes;
 namespace ShoppingList
 {
     /// <summary>
-    /// Interaction logic for AddIngredientWindow.xaml
+    /// Interaction logic for ModifyIngredientWindow.xaml
     /// </summary>
-    public partial class AddIngredientWindow : Window
+    public partial class ModifyIngredientWindow : Window
     {
-        Dish dish;
-        public AddIngredientWindow(Dish dish)
+        public ModifyIngredientWindow()
         {
             InitializeComponent();
-            this.dish = dish;
             categoryCombobox.ItemsSource = Enum.GetValues(typeof(IngredientCategory)).Cast<IngredientCategory>();
-        }
-
-        private void addButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                dish.AddIngredient(new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)categoryCombobox.SelectedItem));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            Close();
         }
     }
 }

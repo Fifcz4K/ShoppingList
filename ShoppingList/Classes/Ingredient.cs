@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingList.Classes
 {
-    enum IngredientCategory
+    public enum IngredientCategory
     {
         Dairy,
         Meat,
@@ -18,7 +18,7 @@ namespace ShoppingList.Classes
         Other
     }
 
-    class Ingredient
+    public class Ingredient
     {
         public string Name { get; set; }
         public IngredientCategory Category { get; set; }

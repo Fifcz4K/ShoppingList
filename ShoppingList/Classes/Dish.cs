@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingList.Classes
 {
-    class Dish
+    public class Dish
     {
         public string Name { get; set; }
         public string ListOfIngredientsJSON { get; set; }
@@ -16,6 +16,13 @@ namespace ShoppingList.Classes
         {
             Name = name;
             ListOfIngredientsJSON = JsonSerializer.Serialize(ingredients);
+        }
+
+        public void AddIngredient(Ingredient ingredient)
+        {
+            List<Ingredient> ingredientList = JsonSerializer.Deserialize<List<Ingredient>>(ListOfIngredientsJSON);
+            ingredientList.Add(ingredient);
+            ListOfIngredientsJSON = JsonSerializer.Serialize(ingredientList);
         }
 
         public override string ToString()

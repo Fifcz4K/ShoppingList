@@ -55,7 +55,7 @@ namespace ShoppingList
 
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
         {
-            AddIngredientWindow addIngredientWindow = new AddIngredientWindow();
+            AddIngredientWindow addIngredientWindow = new AddIngredientWindow(dishListView.SelectedItem as Dish);
             addIngredientWindow.Show();
         }
 
