@@ -21,24 +21,27 @@ namespace ShoppingList
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Dish> dishList = new List<Dish>();
-        List<string> productList = new List<String>();
+        static List<Dish> dishList = new List<Dish>();
+        static List<Ingredient> allIngredients = new List<Ingredient>();
         public MainWindow()
         {
             InitializeComponent();
-            dishList.Add(new Dish("Pizza", "ciasto", "salami", "ser"));
-            dishList.Add(new Dish("Spaghetti", "makaron", "sos", "mięsko"));
-
-            foreach (Dish dish in dishList)
-            {
-                foreach (Product product in dish.Products)
-                {
-                    productList.Add(product.Name);
-                }
-            }
+            dishList.Add(new Dish("Pizza", new Ingredient("Ciasto", IngredientCategory.Bread), new Ingredient("Salami", IngredientCategory.Meat), new Ingredient("Ser", IngredientCategory.Dairy)));
+            dishList.Add(new Dish("Burger", new Ingredient("Bułki", IngredientCategory.Bread), new Ingredient("Mięso wołowe", IngredientCategory.Meat), new Ingredient("Ser", IngredientCategory.Dairy)));
 
             dishListView.ItemsSource = dishList;
-            productListView.ItemsSource = productList;
+            ingredientListView.ItemsSource = allIngredients;
+        }
+
+        static private void updateIngredientList()
+        {
+            foreach (Dish dish in dishList)
+            {
+                foreach (Ingredient ingredient in dish.GetIngredientList())
+                {
+                    allIngredients.Add(ingredient);
+                }
+            }
         }
     }
 }
