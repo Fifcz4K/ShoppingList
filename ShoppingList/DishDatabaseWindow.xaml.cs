@@ -47,5 +47,21 @@ namespace ShoppingList
         {
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
+
+        private void addDishButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void saveDatabaseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
     }
 }

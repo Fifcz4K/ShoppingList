@@ -27,10 +27,12 @@
                         VerticalAlignment="Center">
                 <Button Content="Add dish"
                         Margin="20 5"
-                        x:Name="addDishButton"/>
+                        x:Name="addDishButton"
+                        Click="addDishButton_Click"/>
                 <Button Content="Save"
                         Margin="20 5"
-                        x:Name="saveDatabaseButton"/>
+                        x:Name="saveDatabaseButton"
+                        Click="saveDatabaseButton_Click"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1"
@@ -41,13 +43,16 @@
             </Grid.RowDefinitions>
             <StackPanel Margin="50 5 5 5">
                 <ListView x:Name="ingredientListView"
-                      Height="300">
+                      Height="310">
                 </ListView>
             </StackPanel>
             <StackPanel Grid.Row="1"
-                        Margin="125 0 80 0">
+                        Margin="125 0 80 30"
+                        VerticalAlignment="Center">
                 <Button Content="Add ingredient"
-                        Margin="5"/>
+                        Margin="5"
+                        x:Name="addIngredientButton"
+                        Click="addIngredientButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
