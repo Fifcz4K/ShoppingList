@@ -45,12 +45,18 @@ namespace ShoppingList
 
         private void dishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (dishListView.SelectedItem == null)
+                return;
+
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AddDishWindow addDishWindow = new AddDishWindow(ref dishList);
+            addDishWindow.ShowDialog();
+            dishListView.ItemsSource = null;
+            dishListView.ItemsSource = dishList;
         }
 
         private void ingredientListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

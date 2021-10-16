@@ -15,12 +15,18 @@ namespace ShoppingList.Classes
         public Dish(string name, params Ingredient[] ingredients)
         {
             Name = name;
-            ListOfIngredientsJSON = JsonSerializer.Serialize(ingredients);
+            if(ingredients != null)
+                ListOfIngredientsJSON = JsonSerializer.Serialize(ingredients);
         }
 
         public void AddIngredient(Ingredient ingredient)
         {
-            List<Ingredient> ingredientList = JsonSerializer.Deserialize<List<Ingredient>>(ListOfIngredientsJSON);
+            List<Ingredient> ingredientList;
+            if (string.IsNullOrEmpty(ListOfIngredientsJSON))
+                ingredientList = new List<Ingredient>();
+            else
+                ingredientList = JsonSerializer.Deserialize<List<Ingredient>>(ListOfIngredientsJSON);
+
             ingredientList.Add(ingredient);
             ListOfIngredientsJSON = JsonSerializer.Serialize(ingredientList);
         }
@@ -46,6 +52,9 @@ namespace ShoppingList.Classes
 
         public List<Ingredient> GetIngredientList()
         {
+            if(string.IsNullOrEmpty(ListOfIngredientsJSON))
+                return new List<Ingredient>();
+
             return JsonSerializer.Deserialize<List<Ingredient>>(ListOfIngredientsJSON);
         }
     }
