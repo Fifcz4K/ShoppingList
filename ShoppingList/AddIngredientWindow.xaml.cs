@@ -30,14 +30,19 @@ namespace ShoppingList
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if(string.IsNullOrEmpty(ingredientNameTextbox.Text) || !char.IsLetter(ingredientNameTextbox.Text[0]))
             {
-                dish.AddIngredient(new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)categoryCombobox.SelectedItem));
+                MessageBox.Show("Ingredient needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            catch (Exception)
+
+            if(categoryCombobox.SelectedItem == null)
             {
-                throw;
+                MessageBox.Show("You have to choose a category of an ingredient", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            dish.AddIngredient(new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)categoryCombobox.SelectedItem));
 
             Close();
         }
