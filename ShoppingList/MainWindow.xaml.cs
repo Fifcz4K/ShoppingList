@@ -23,6 +23,7 @@ namespace ShoppingList
         public MainWindow()
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void updateDatabaseButton_Click(object sender, RoutedEventArgs e)

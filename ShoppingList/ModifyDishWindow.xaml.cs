@@ -25,6 +25,9 @@ namespace ShoppingList
         public ModifyDishWindow(ref List<Dish> dishList, int index)
         {
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             this.dishList = dishList;
             this.index = index;
             dishNameTextbox.Text = dishList[index].Name;

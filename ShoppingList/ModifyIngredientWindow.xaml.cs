@@ -25,6 +25,9 @@ namespace ShoppingList
         public ModifyIngredientWindow(Ingredient ingredient, Dish dish)
         {
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             categoryCombobox.ItemsSource = Enum.GetValues(typeof(IngredientCategory)).Cast<IngredientCategory>();
             this.dish = dish;
             this.ingredient = ingredient;

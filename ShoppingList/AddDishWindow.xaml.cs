@@ -24,6 +24,9 @@ namespace ShoppingList
         public AddDishWindow(ref List<Dish> dishList)
         {
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             this.dishList = dishList;
         }
 

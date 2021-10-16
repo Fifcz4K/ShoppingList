@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="ModifyDishWindow" Height="160" Width="300">
     <Grid Margin="5">
         <StackPanel HorizontalAlignment="Center"

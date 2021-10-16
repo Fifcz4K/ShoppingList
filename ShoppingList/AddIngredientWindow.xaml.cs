@@ -24,6 +24,9 @@ namespace ShoppingList
         public AddIngredientWindow(Dish dish)
         {
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             this.dish = dish;
             categoryCombobox.ItemsSource = Enum.GetValues(typeof(IngredientCategory)).Cast<IngredientCategory>();
         }
