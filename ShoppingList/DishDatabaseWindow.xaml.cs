@@ -21,16 +21,17 @@ namespace ShoppingList
     /// </summary>
     public partial class DishDatabaseWindow : Window
     {
+        List<Dish> dishList;
         public DishDatabaseWindow()
         {
             InitializeComponent();
+            dishList = new List<Dish>();
             ReadDatabase();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         void ReadDatabase()
         {
-            List<Dish> dishList = new List<Dish>();
             using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
             {
                 connection.CreateTable<Dish>();
@@ -99,6 +100,22 @@ namespace ShoppingList
         private void closeDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void dishFilterTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<Dish> filteredList = new List<Dish>();
+
+            filteredList = dishList.Where(x => x.Name.ToLower().Contains(dishFilterTextbox.Text.ToLower())).ToList();
+            dishListView.ItemsSource = filteredList;
+        }
+
+        private void ingredientFilterTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<Ingredient> filteredList = new List<Ingredient>();
+
+            filteredList = (dishListView.SelectedItem as Dish).GetIngredientList().Where(x => x.Name.ToLower().Contains(ingredientFilterTextbox.Text.ToLower())).ToList();
+            ingredientListView.ItemsSource = filteredList;
         }
     }
 }

@@ -17,20 +17,35 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="5">
-                <ListView x:Name="dishListView"
-                          Height="265"
-                          MouseDoubleClick="dishListView_MouseDoubleClick"
-                          SelectionChanged="dishListView_SelectionChanged">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+            <StackPanel Margin="20 5 5 5">
+                <StackPanel Margin="0 0 0 10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Find:"/>
+                        <TextBox Grid.Column="1" 
+                                 VerticalAlignment="Center"
+                                 x:Name="dishFilterTextbox"
+                                 TextChanged="dishFilterTextbox_TextChanged"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel>
+                    <ListView x:Name="dishListView"
+                              Height="230"
+                              MouseDoubleClick="dishListView_MouseDoubleClick"
+                              SelectionChanged="dishListView_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1"
-                        Margin="80 0"
+                        Margin="95 0 80 0"
                         VerticalAlignment="Center">
                 <Button Content="Add dish"
                         Margin="20 5"
@@ -48,14 +63,34 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="50 5 5 5">
-                <ListView x:Name="ingredientListView"
-                          Height="310"
-                          MouseDoubleClick="ingredientListView_MouseDoubleClick">
-                </ListView>
+            <StackPanel Margin="50 5 20 5">
+                <StackPanel Margin="0 0 0 10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Find:"/>
+                        <TextBox Grid.Column="1" 
+                                 VerticalAlignment="Center"
+                                 x:Name="ingredientFilterTextbox"
+                                 TextChanged="ingredientFilterTextbox_TextChanged"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel>
+                    <ListView x:Name="ingredientListView"
+                              Height="260"
+                              MouseDoubleClick="ingredientListView_MouseDoubleClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="1"
-                        Margin="125 0 80 30"
+                        Margin="125 0 95 30"
                         VerticalAlignment="Center">
                 <Button Content="Add ingredient"
                         Margin="5"
