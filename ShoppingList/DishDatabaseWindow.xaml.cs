@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ShoppingList.Classes;
+using SQLite;
 
 namespace ShoppingList
 {
@@ -24,22 +25,25 @@ namespace ShoppingList
         public DishDatabaseWindow()
         {
             InitializeComponent();
-
+            ReadDatabase();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            dishList.Add(new Dish("Pizza", new Ingredient("Ciasto", IngredientCategory.Bread), new Ingredient("Salami", IngredientCategory.Meat), new Ingredient("Ser", IngredientCategory.Dairy)));
-            dishList.Add(new Dish("Burger", new Ingredient("Bułki", IngredientCategory.Bread), new Ingredient("Mięso wołowe", IngredientCategory.Meat), new Ingredient("Ser", IngredientCategory.Dairy)));
-            dishList.Add(new Dish("Kanapka", new Ingredient("chleb", IngredientCategory.Bread), new Ingredient("Szyneczka", IngredientCategory.Meat)));
 
             dishListView.ItemsSource = dishList;
         }
 
+        void ReadDatabase()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                dishList = connection.Table<Dish>().ToList();
+            }
+        }
+
         private void dishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dishListView.SelectedItem == null)
-                return;
-
-            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
+            if (dishListView.SelectedItem != null)
+                ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
@@ -90,6 +94,16 @@ namespace ShoppingList
 
         private void saveDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
+            using(SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.DeleteAll<Dish>();
+                foreach (Dish dish in dishList)
+                {
+                    connection.Insert(dish);
+                }
+            }
+
             Close();
         }
     }

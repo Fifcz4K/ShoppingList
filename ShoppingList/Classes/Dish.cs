@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,15 @@ namespace ShoppingList.Classes
 {
     public class Dish
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ListOfIngredientsJSON { get; set; }
+
+        public Dish()
+        {
+
+        }
 
         public Dish(string name, params Ingredient[] ingredients)
         {
