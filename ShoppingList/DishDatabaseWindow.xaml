@@ -43,7 +43,8 @@
             </Grid.RowDefinitions>
             <StackPanel Margin="50 5 5 5">
                 <ListView x:Name="ingredientListView"
-                      Height="310">
+                          Height="310"
+                          SelectionChanged="ingredientListView_SelectionChanged">
                 </ListView>
             </StackPanel>
             <StackPanel Grid.Row="1"

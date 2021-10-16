@@ -25,6 +25,20 @@ namespace ShoppingList.Classes
             ListOfIngredientsJSON = JsonSerializer.Serialize(ingredientList);
         }
 
+        public void UpdateIngredient(Ingredient oldIngredient, Ingredient newIngredient)
+        {
+            List<Ingredient> ingredientList = JsonSerializer.Deserialize<List<Ingredient>>(ListOfIngredientsJSON);
+            ingredientList[ingredientList.FindIndex(x => x.Name.Equals(oldIngredient.Name))] = newIngredient;
+            ListOfIngredientsJSON = JsonSerializer.Serialize(ingredientList);
+        }
+
+        public void RemoveIngredient(Ingredient ingredient)
+        {
+            List<Ingredient> ingredientList = JsonSerializer.Deserialize<List<Ingredient>>(ListOfIngredientsJSON);
+            ingredientList.Remove(ingredientList.Find(x => x.Name.Equals(ingredient.Name)));
+            ListOfIngredientsJSON = JsonSerializer.Serialize(ingredientList);
+        }
+
         public override string ToString()
         {
             return $"{Name}";

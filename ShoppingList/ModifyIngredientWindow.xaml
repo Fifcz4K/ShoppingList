@@ -25,7 +25,7 @@
                         <Label Content="Ingredient:"/>
                         <TextBox Text="Name of ingredient"
                                  Grid.Column="1"
-                                 x:Name="ingredientName"
+                                 x:Name="ingredientNameTextbox"
                                  VerticalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
@@ -35,11 +35,15 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2"
                             Margin="5">
-                    <Button Content="Update"/>
+                    <Button Content="Update"
+                            x:Name="updateButton"
+                            Click="updateButton_Click"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3"
                             Margin="5">
-                    <Button Content="Delete"/>
+                    <Button Content="Delete"
+                            x:Name="deleteButton"
+                            Click="deleteButton_Click"/>
                 </StackPanel>
             </Grid>
         </StackPanel>

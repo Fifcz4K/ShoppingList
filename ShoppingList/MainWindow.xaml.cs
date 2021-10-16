@@ -28,7 +28,7 @@ namespace ShoppingList
         private void updateDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
             DishDatabaseWindow dishDatabaseWindow = new DishDatabaseWindow();
-            dishDatabaseWindow.Show();
+            dishDatabaseWindow.ShowDialog();
         }
 
         private void scheduleButton_Click(object sender, RoutedEventArgs e)

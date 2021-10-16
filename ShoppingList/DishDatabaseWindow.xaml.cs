@@ -53,6 +53,16 @@ namespace ShoppingList
 
         }
 
+        private void ingredientListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ingredientListView.SelectedItem == null)
+                return;
+
+            ModifyIngredientWindow modifyIngredientWindow = new ModifyIngredientWindow(ingredientListView.SelectedItem as Ingredient, dishListView.SelectedItem as Dish);
+            modifyIngredientWindow.ShowDialog();
+            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
+        }
+
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
         {
             if(dishListView.SelectedItem == null)
@@ -62,13 +72,13 @@ namespace ShoppingList
             }    
 
             AddIngredientWindow addIngredientWindow = new AddIngredientWindow(dishListView.SelectedItem as Dish);
-            addIngredientWindow.Show();
+            addIngredientWindow.ShowDialog();
+            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
 
         private void saveDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
     }
 }
