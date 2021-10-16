@@ -32,17 +32,6 @@ namespace ShoppingList
             dishListView.ItemsSource = dishList;
         }
 
-        //static private void updateIngredientList()
-        //{
-        //    foreach (Dish dish in dishList)
-        //    {
-        //        foreach (Ingredient ingredient in dish.GetIngredientList())
-        //        {
-        //            allIngredients.Add(ingredient);
-        //        }
-        //    }
-        //}
-
         private void dishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dishListView.SelectedItem == null)
@@ -59,14 +48,19 @@ namespace ShoppingList
             dishListView.ItemsSource = dishList;
         }
 
-        private void ingredientListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dishListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (ingredientListView.SelectedItem == null)
+            if (dishListView.SelectedItem == null)
                 return;
 
-            ModifyIngredientWindow modifyIngredientWindow = new ModifyIngredientWindow(ingredientListView.SelectedItem as Ingredient, dishListView.SelectedItem as Dish);
-            modifyIngredientWindow.ShowDialog();
-            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
+            int index = dishList.FindIndex(x => x.Name == (dishListView.SelectedItem as Dish).Name);
+            ModifyDishWindow modifyDishWindow = new ModifyDishWindow(ref dishList, index);
+            modifyDishWindow.ShowDialog();
+            dishListView.ItemsSource = null;
+            dishListView.ItemsSource = dishList;
+
+            if (dishListView.SelectedItem == null)
+                ingredientListView.ItemsSource = null;
         }
 
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
@@ -79,6 +73,16 @@ namespace ShoppingList
 
             AddIngredientWindow addIngredientWindow = new AddIngredientWindow(dishListView.SelectedItem as Dish);
             addIngredientWindow.ShowDialog();
+            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
+        }
+
+        private void ingredientListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ingredientListView.SelectedItem == null)
+                return;
+
+            ModifyIngredientWindow modifyIngredientWindow = new ModifyIngredientWindow(ingredientListView.SelectedItem as Ingredient, dishListView.SelectedItem as Dish);
+            modifyIngredientWindow.ShowDialog();
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
 

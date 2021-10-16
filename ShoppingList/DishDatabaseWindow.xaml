@@ -20,6 +20,7 @@
             <StackPanel Margin="5">
                 <ListView x:Name="dishListView"
                           Height="265"
+                          MouseDoubleClick="dishListView_MouseDoubleClick"
                           SelectionChanged="dishListView_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -50,7 +51,7 @@
             <StackPanel Margin="50 5 5 5">
                 <ListView x:Name="ingredientListView"
                           Height="310"
-                          SelectionChanged="ingredientListView_SelectionChanged">
+                          MouseDoubleClick="ingredientListView_MouseDoubleClick">
                 </ListView>
             </StackPanel>
             <StackPanel Grid.Row="1"

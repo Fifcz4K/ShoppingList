@@ -31,7 +31,11 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1"
                             Margin="5">
-                    <ComboBox x:Name="categoryCombobox"/>
+                    <ComboBox x:Name="categoryCombobox"
+                              IsEditable="true"
+                              IsReadOnly="true"
+                              Text="--Select category--"
+                              HorizontalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2"
                             Margin="5">
