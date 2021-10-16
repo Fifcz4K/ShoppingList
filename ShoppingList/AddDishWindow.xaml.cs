@@ -1,4 +1,5 @@
 ﻿using ShoppingList.Classes;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,10 @@ namespace ShoppingList
     /// </summary>
     public partial class AddDishWindow : Window
     {
-        List<Dish> dishList;
-        public AddDishWindow(ref List<Dish> dishList)
+        public AddDishWindow()
         {
             InitializeComponent();
-
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            this.dishList = dishList;
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
@@ -38,7 +35,17 @@ namespace ShoppingList
                 return;
             }
 
-            dishList.Add(new Dish(dishNameTextbox.Text, null));
+            Dish dish = new Dish()
+            {
+                Name = dishNameTextbox.Text
+            };
+
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Insert(dish);
+            }
+
             Close();
         }
     }

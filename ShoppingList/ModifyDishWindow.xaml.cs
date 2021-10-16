@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ShoppingList.Classes;
+using SQLite;
 
 namespace ShoppingList
 {
@@ -20,17 +21,15 @@ namespace ShoppingList
     /// </summary>
     public partial class ModifyDishWindow : Window
     {
-        List<Dish> dishList;
-        int index;
-        public ModifyDishWindow(ref List<Dish> dishList, int index)
+        Dish dish;
+        public ModifyDishWindow(Dish dish)
         {
             InitializeComponent();
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            this.dishList = dishList;
-            this.index = index;
-            dishNameTextbox.Text = dishList[index].Name;
+            this.dish = dish;
+            dishNameTextbox.Text = dish.Name;
         }
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
@@ -41,13 +40,25 @@ namespace ShoppingList
                 return;
             }
 
-            dishList[index].Name = dishNameTextbox.Text;
+            dish.Name = dishNameTextbox.Text;
+
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Update(dish);
+            }
+
             Close();
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            dishList.RemoveAt(index);
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Delete(dish);
+            }
+
             Close();
         }
     }

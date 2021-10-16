@@ -15,18 +15,6 @@ namespace ShoppingList.Classes
         public string Name { get; set; }
         public string ListOfIngredientsJSON { get; set; }
 
-        public Dish()
-        {
-
-        }
-
-        public Dish(string name, params Ingredient[] ingredients)
-        {
-            Name = name;
-            if(ingredients != null)
-                ListOfIngredientsJSON = JsonSerializer.Serialize(ingredients);
-        }
-
         public void AddIngredient(Ingredient ingredient)
         {
             List<Ingredient> ingredientList;

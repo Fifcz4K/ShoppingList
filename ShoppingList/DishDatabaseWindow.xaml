@@ -36,10 +36,10 @@
                         Margin="20 5"
                         x:Name="addDishButton"
                         Click="addDishButton_Click"/>
-                <Button Content="Save"
+                <Button Content="Close"
                         Margin="20 5"
-                        x:Name="saveDatabaseButton"
-                        Click="saveDatabaseButton_Click"/>
+                        x:Name="closeDatabaseButton"
+                        Click="closeDatabaseButton_Click"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1"

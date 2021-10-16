@@ -21,25 +21,33 @@ namespace ShoppingList
     /// </summary>
     public partial class DishDatabaseWindow : Window
     {
-        static List<Dish> dishList = new List<Dish>();
         public DishDatabaseWindow()
         {
             InitializeComponent();
             ReadDatabase();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            dishListView.ItemsSource = dishList;
         }
 
         void ReadDatabase()
         {
+            List<Dish> dishList = new List<Dish>();
             using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
             {
                 connection.CreateTable<Dish>();
                 dishList = connection.Table<Dish>().ToList();
             }
-        }
 
+            if (dishList != null)
+                dishListView.ItemsSource = dishList;
+        }
+        void UpdateDatabase(Dish dish)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Update(dish);
+            }
+        }
         private void dishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dishListView.SelectedItem != null)
@@ -48,10 +56,9 @@ namespace ShoppingList
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
         {
-            AddDishWindow addDishWindow = new AddDishWindow(ref dishList);
+            AddDishWindow addDishWindow = new AddDishWindow();
             addDishWindow.ShowDialog();
-            dishListView.ItemsSource = null;
-            dishListView.ItemsSource = dishList;
+            ReadDatabase();
         }
 
         private void dishListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -59,14 +66,9 @@ namespace ShoppingList
             if (dishListView.SelectedItem == null)
                 return;
 
-            int index = dishList.FindIndex(x => x.Name == (dishListView.SelectedItem as Dish).Name);
-            ModifyDishWindow modifyDishWindow = new ModifyDishWindow(ref dishList, index);
+            ModifyDishWindow modifyDishWindow = new ModifyDishWindow(dishListView.SelectedItem as Dish);
             modifyDishWindow.ShowDialog();
-            dishListView.ItemsSource = null;
-            dishListView.ItemsSource = dishList;
-
-            if (dishListView.SelectedItem == null)
-                ingredientListView.ItemsSource = null;
+            ReadDatabase();
         }
 
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
@@ -79,6 +81,7 @@ namespace ShoppingList
 
             AddIngredientWindow addIngredientWindow = new AddIngredientWindow(dishListView.SelectedItem as Dish);
             addIngredientWindow.ShowDialog();
+            UpdateDatabase(dishListView.SelectedItem as Dish);
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
 
@@ -89,21 +92,12 @@ namespace ShoppingList
 
             ModifyIngredientWindow modifyIngredientWindow = new ModifyIngredientWindow(ingredientListView.SelectedItem as Ingredient, dishListView.SelectedItem as Dish);
             modifyIngredientWindow.ShowDialog();
+            UpdateDatabase(dishListView.SelectedItem as Dish);
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
         }
 
-        private void saveDatabaseButton_Click(object sender, RoutedEventArgs e)
+        private void closeDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
-            using(SQLiteConnection connection = new SQLiteConnection(App.databasePath))
-            {
-                connection.CreateTable<Dish>();
-                connection.DeleteAll<Dish>();
-                foreach (Dish dish in dishList)
-                {
-                    connection.Insert(dish);
-                }
-            }
-
             Close();
         }
     }
