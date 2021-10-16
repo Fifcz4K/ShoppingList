@@ -55,6 +55,12 @@ namespace ShoppingList
 
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
         {
+            if(dishListView.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose a dish", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }    
+
             AddIngredientWindow addIngredientWindow = new AddIngredientWindow(dishListView.SelectedItem as Dish);
             addIngredientWindow.Show();
         }
