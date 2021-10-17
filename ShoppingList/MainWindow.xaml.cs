@@ -34,7 +34,8 @@ namespace ShoppingList
 
         private void scheduleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ScheduleWindow scheduleWindow = new ScheduleWindow();
+            scheduleWindow.ShowDialog();
         }
     }
 }
