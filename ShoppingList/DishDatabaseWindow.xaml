@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ShoppingList"
+        xmlns:local="clr-namespace:ShoppingList.Controls"
+        xmlns:uc="clr-namespace:ShoppingList.Controls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="DishDatabaseWindow" Height="450" Width="800">
@@ -36,9 +37,14 @@
                               Height="230"
                               MouseDoubleClick="dishListView_MouseDoubleClick"
                               SelectionChanged="dishListView_SelectionChanged">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
+                                <uc:DishDatabaseControl Dish="{Binding}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -81,9 +87,14 @@
                     <ListView x:Name="ingredientListView"
                               Height="260"
                               MouseDoubleClick="ingredientListView_MouseDoubleClick">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
+                                <uc:IngredientDatabaseControl Ingredient="{Binding}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

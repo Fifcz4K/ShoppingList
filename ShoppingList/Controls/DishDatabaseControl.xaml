@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="ShoppingList.Controls.DishDatabaseControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShoppingList.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="200">
+    <Grid Background="#35E6B2BA"
+          Margin="0 0 0 2">
+        <StackPanel>
+            <TextBlock Text="Ingredient"
+                       FontSize="15"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                       x:Name="dishNameTextblock"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
