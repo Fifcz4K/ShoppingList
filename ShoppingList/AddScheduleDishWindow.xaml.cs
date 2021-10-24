@@ -22,7 +22,7 @@ namespace ShoppingList
     public partial class AddScheduleDishWindow : Window
     {
         List<Dish> dishList = new List<Dish>();
-        ScheduleDish scheduleDish = new ScheduleDish();
+        ScheduleDish scheduleDish;
         public AddScheduleDishWindow(ref ScheduleDish outDish)
         {
             InitializeComponent();

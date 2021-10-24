@@ -21,5 +21,15 @@ namespace ShoppingList.Classes
     {
         public Dish Dish { get; set; }
         public Days Day { get; set; }
+
+        public ScheduleDish()
+        {
+            Dish = new Dish();
+        }
+
+        public override string ToString()
+        {
+            return $"{Dish.Name}";
+        }
     }
 }

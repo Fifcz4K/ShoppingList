@@ -27,16 +27,24 @@ namespace ShoppingList
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
+        private void updateDishList(ScheduleDish newDish)
+        {
+            scheduledList.Add(newDish);
+            if (scheduledList != null)
+                dishListview.ItemsSource = scheduledList.Select(x => x.Dish).ToList();
+        }
+
         private void addDishButton_Click(object sender, RoutedEventArgs e)
         {
-            ScheduleDish newDish = null;
+            ScheduleDish newDish = new ScheduleDish();
+            newDish.Dish.Name = "None";
             AddScheduleDishWindow addScheduleDishWindow = new AddScheduleDishWindow(ref newDish);
             addScheduleDishWindow.ShowDialog();
 
-            if (newDish == null)
+            if (newDish.Dish.Name == "None")
                 return;
 
-            scheduledList.Add(newDish);
+            updateDishList(newDish);
         }
     }
 }
