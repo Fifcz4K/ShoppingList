@@ -25,11 +25,17 @@ namespace ShoppingList
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(dishListview.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Day");
+            view.GroupDescriptions.Add(groupDescription);
         }
 
         private void updateDishList(ScheduleDish newDish)
         {
-            scheduledList.Add(newDish);
+            if(newDish != null)
+                scheduledList.Add(newDish);
+
             if (scheduledList != null)
                 dishListview.ItemsSource = scheduledList.Select(x => x.Dish).ToList();
         }
