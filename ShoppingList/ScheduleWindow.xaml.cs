@@ -18,20 +18,25 @@ namespace ShoppingList
     /// <summary>
     /// Interaction logic for ScheduleWindow.xaml
     /// </summary>
-
-    class ScheduledDish
-    {
-        public Dish Dish { get; set; }
-        public DayOfWeek Day { get; set; }
-    }
-
     public partial class ScheduleWindow : Window
     {
-        List<ScheduledDish> scheduledList = new List<ScheduledDish>();
+        List<ScheduleDish> scheduledList = new List<ScheduleDish>();
         public ScheduleWindow()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        private void addDishButton_Click(object sender, RoutedEventArgs e)
+        {
+            ScheduleDish newDish = null;
+            AddScheduleDishWindow addScheduleDishWindow = new AddScheduleDishWindow(ref newDish);
+            addScheduleDishWindow.ShowDialog();
+
+            if (newDish == null)
+                return;
+
+            scheduledList.Add(newDish);
         }
     }
 }

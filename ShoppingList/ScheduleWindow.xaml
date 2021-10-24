@@ -22,12 +22,13 @@
                 </Grid.RowDefinitions>
                 <Button Content="+"
                         Margin="5"
+                        Padding="1 0 0 4"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        FontSize="14"
-                        FontWeight="Bold"/>
+                        FontSize="17"
+                        FontWeight="Bold"
+                        x:Name="addDishButton"
+                        Click="addDishButton_Click"/>
                 <StackPanel Grid.Row="1"
                             Grid.ColumnSpan="2"
                             Margin="5">

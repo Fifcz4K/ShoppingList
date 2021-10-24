@@ -1,12 +1,11 @@
-﻿<Window x:Class="ShoppingList.AddIngredientWindow"
+﻿<Window x:Class="ShoppingList.AddScheduleDishWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
-        Title="AddIngredientWindow" Height="160" Width="300">
+        Title="AddScheduleDishWindow" Height="160" Width="300">
     <Grid Margin="5">
         <StackPanel HorizontalAlignment="Center"
                     Margin="5">
@@ -20,21 +19,23 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Ingredient:"/>
-                        <TextBox Text="Name of ingredient"
-                                 Grid.Column="1"
-                                 x:Name="ingredientNameTextbox"
-                                 VerticalContentAlignment="Center"/>
+                        <Label Content="Dish:"/>
+                        <ComboBox x:Name="dishCombobox"
+                                  Grid.Column="1"
+                                  IsEditable="true"
+                                  IsReadOnly="true"
+                                  Text="-- Select dish --"
+                                  HorizontalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Row="1"
                             Margin="5">
-                    <ComboBox x:Name="categoryCombobox"
+                    <ComboBox x:Name="dayCombobox"
                               IsEditable="true"
                               IsReadOnly="true"
-                              Text="-- Select category --"
+                              Text="-- Select day --"
                               HorizontalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2"
