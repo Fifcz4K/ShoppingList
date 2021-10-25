@@ -21,6 +21,7 @@ namespace ShoppingList
     public partial class ScheduleWindow : Window
     {
         List<ScheduleDish> scheduledList = new List<ScheduleDish>();
+        List<Ingredient> ingredientList = new List<Ingredient>();
         public ScheduleWindow()
         {
             InitializeComponent();
@@ -36,9 +37,34 @@ namespace ShoppingList
             {
                 dishListview.ItemsSource = scheduledList.OrderBy(x => x.Day).ToList();
 
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(dishListview.ItemsSource);
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Day");
-                view.GroupDescriptions.Add(groupDescription);
+                CollectionView dayView = (CollectionView)CollectionViewSource.GetDefaultView(dishListview.ItemsSource);
+                PropertyGroupDescription dayGroupDescription = new PropertyGroupDescription("Day");
+                dayView.GroupDescriptions.Add(dayGroupDescription);
+            }
+        }
+
+        private void updateIngredientList()
+        {
+            if(scheduledList.Count == 0)
+            {
+                ingredientListview.ItemsSource = null;
+                return;
+            }
+
+            List<Dish> tempDishList = new List<Dish>();
+            tempDishList = scheduledList.Select(x => x.Dish).ToList();
+            ingredientList.Clear();
+            foreach (var item in tempDishList)
+            {
+                ingredientList.AddRange(item.GetIngredientList());
+            }
+
+            if(ingredientList != null)
+            {
+                ingredientListview.ItemsSource = ingredientList.OrderBy(x => x.Category).ToList();
+                CollectionView ingredientView = (CollectionView)CollectionViewSource.GetDefaultView(ingredientListview.ItemsSource);
+                PropertyGroupDescription ingredientGroupDescription = new PropertyGroupDescription("Category");
+                ingredientView.GroupDescriptions.Add(ingredientGroupDescription);
             }
         }
 
@@ -53,6 +79,7 @@ namespace ShoppingList
                 return;
 
             updateDishList(newDish);
+            updateIngredientList();
         }
 
         private void deleteDishButton_Click(object sender, RoutedEventArgs e)
@@ -62,6 +89,7 @@ namespace ShoppingList
 
             scheduledList.Remove(dishListview.SelectedItem as ScheduleDish);
             updateDishList(null);
+            updateIngredientList();
         }
     }
 }

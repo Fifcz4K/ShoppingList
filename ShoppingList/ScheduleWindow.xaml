@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="ScheduleWindow" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="ScheduleWindow" Height="700" Width="800">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -19,7 +20,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="15*"/>
                 </Grid.RowDefinitions>
                 <Button Content="+"
                         Margin="5"
@@ -42,7 +43,8 @@
                 <StackPanel Grid.Row="1"
                             Grid.ColumnSpan="3"
                             Margin="5">
-                    <ListView x:Name="dishListview">
+                    <ListView x:Name="dishListview"
+                              Height="584">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock x:Name="dishTextblock"
@@ -66,12 +68,25 @@
             </Grid>
         <StackPanel Grid.Column="1"
                     Margin="5">
-            <ListView>
+            <ListView x:Name="ingredientListview"
+                      Height="630">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock FontWeight="Bold"
+                                           FontSize="13"
+                                           FontStyle="Italic"
+                                           Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
             </ListView>
         </StackPanel>
     </Grid>
