@@ -25,10 +25,6 @@ namespace ShoppingList
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(dishListview.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Day");
-            view.GroupDescriptions.Add(groupDescription);
         }
 
         private void updateDishList(ScheduleDish newDish)
@@ -37,7 +33,13 @@ namespace ShoppingList
                 scheduledList.Add(newDish);
 
             if (scheduledList != null)
-                dishListview.ItemsSource = scheduledList.Select(x => x.Dish).ToList();
+            {
+                dishListview.ItemsSource = scheduledList.OrderBy(x => x.Day).ToList();
+
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(dishListview.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Day");
+                view.GroupDescriptions.Add(groupDescription);
+            }
         }
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
@@ -51,6 +53,15 @@ namespace ShoppingList
                 return;
 
             updateDishList(newDish);
+        }
+
+        private void deleteDishButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dishListview.SelectedItem == null)
+                return;
+
+            scheduledList.Remove(dishListview.SelectedItem as ScheduleDish);
+            updateDishList(null);
         }
     }
 }

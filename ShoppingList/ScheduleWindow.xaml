@@ -14,7 +14,8 @@
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -29,14 +30,23 @@
                         FontWeight="Bold"
                         x:Name="addDishButton"
                         Click="addDishButton_Click"/>
+                <Button Content="-"
+                        Margin="5"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        FontSize="17"
+                        FontWeight="Bold"
+                        Grid.Column="1"
+                        x:Name="deleteDishButton"
+                        Click="deleteDishButton_Click"/>
                 <StackPanel Grid.Row="1"
-                            Grid.ColumnSpan="2"
+                            Grid.ColumnSpan="3"
                             Margin="5">
                     <ListView x:Name="dishListview">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock x:Name="dishTextblock"
-                                           Text="{Binding Name}"/>
+                                           Text="{Binding Dish}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     <ListView.GroupStyle>
@@ -45,6 +55,7 @@
                                 <DataTemplate>
                                     <TextBlock FontWeight="Bold"
                                                FontSize="14"
+                                               FontStyle="Italic"
                                                Text="{Binding Name}"/>
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
