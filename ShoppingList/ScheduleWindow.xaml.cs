@@ -18,10 +18,20 @@ namespace ShoppingList
     /// <summary>
     /// Interaction logic for ScheduleWindow.xaml
     /// </summary>
+    public class IngredientShoppingList : Ingredient
+    {
+        public UInt16 Counter { get; set; }
+        public IngredientShoppingList(Ingredient ingredient) : base(ingredient.Name, ingredient.Category)
+        {
+            Counter = 1;
+        }
+
+
+    }
     public partial class ScheduleWindow : Window
     {
         List<ScheduleDish> scheduledList = new List<ScheduleDish>();
-        List<Ingredient> ingredientList = new List<Ingredient>();
+        List<IngredientShoppingList> ingredientList = new List<IngredientShoppingList>();
         public ScheduleWindow()
         {
             InitializeComponent();
@@ -56,7 +66,18 @@ namespace ShoppingList
             ingredientList.Clear();
             foreach (var item in tempDishList)
             {
-                ingredientList.AddRange(item.GetIngredientList());
+                foreach (var ingredient in item.GetIngredientList())
+                {
+                    int index = ingredientList.FindIndex(x => x.Name == ingredient.Name);
+                    if (index == -1)
+                    {
+                        ingredientList.Add(new IngredientShoppingList(ingredient));
+                    }
+                    else
+                    {
+                        ingredientList[index].Counter++;
+                    }
+                }
             }
 
             if(ingredientList != null)

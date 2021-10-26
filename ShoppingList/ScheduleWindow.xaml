@@ -69,12 +69,14 @@
         <StackPanel Grid.Column="1"
                     Margin="5">
             <ListView x:Name="ingredientListview"
-                      Height="630">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                      Height="630"
+                      Foreground="Black">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Ingredient" Width="300" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Count" Width="50" DisplayMemberBinding="{Binding Counter}"/>
+                    </GridView>
+                </ListView.View>
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
