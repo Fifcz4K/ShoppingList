@@ -23,7 +23,8 @@
                 <RowDefinition Height="8*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-                <Grid VerticalAlignment="Center">
+                <Grid VerticalAlignment="Center"
+                      Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="5*"/>
@@ -36,6 +37,7 @@
                 </Grid>
                 <ListView x:Name="dishListView"
                           Grid.Row="1"
+                          Margin="5"
                           SelectionChanged="dishListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -90,7 +92,8 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <Grid>
+            <Grid Margin="5"
+                  VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5*"/>
@@ -102,6 +105,7 @@
                             TextChanged="ingredientFilterTextbox_TextChanged"/>
             </Grid>
             <ListView x:Name="ingredientListView"
+                      Margin="5"
                       SelectionChanged="ingredientListView_SelectionChanged"
                       Grid.Row="1">
                 <ListView.ItemContainerStyle>
