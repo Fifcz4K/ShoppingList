@@ -86,48 +86,74 @@
         <Grid Grid.Column="1"
               Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="50 5 20 5">
-                <StackPanel Margin="0 0 0 10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Find:"/>
-                        <TextBox Grid.Column="1" 
-                                 VerticalAlignment="Center"
-                                 x:Name="ingredientFilterTextbox"
-                                 TextChanged="ingredientFilterTextbox_TextChanged"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel>
-                    <ListView x:Name="ingredientListView"
-                              Height="260"
-                              MouseDoubleClick="ingredientListView_MouseDoubleClick">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <uc:IngredientDatabaseControl Ingredient="{Binding}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Row="1"
-                        Margin="125 0 95 30"
-                        VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Find:"/>
+                <TextBox Grid.Column="1" 
+                            VerticalAlignment="Center"
+                            x:Name="ingredientFilterTextbox"
+                            TextChanged="ingredientFilterTextbox_TextChanged"/>
+            </Grid>
+            <ListView x:Name="ingredientListView"
+                      SelectionChanged="ingredientListView_SelectionChanged"
+                      Grid.Row="1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <uc:IngredientDatabaseControl Ingredient="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
+                    </Style>
+                </Grid.Resources>
+                <TextBox Grid.ColumnSpan="3"
+                         Margin="5"
+                         x:Name="ingredientNameTextbox"/>
+                <ComboBox Grid.ColumnSpan="3"
+                          Grid.Row="1"
+                          Margin="5"
+                          x:Name="ingredientCategoryCombobox"/>
                 <Button Content="Add ingredient"
-                        Margin="5"
                         x:Name="addIngredientButton"
+                        Grid.Row="2"
                         Click="addIngredientButton_Click"/>
-            </StackPanel>
+                <Button Content="Save edited"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        x:Name="editIngredientButton"
+                        Click="editIngredientButton_Click"/>
+                <Button Content="Delete selected"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        x:Name="deleteIngredientButton"
+                        Click="deleteIngredientButton_Click"/>
+            </Grid>
         </Grid>
         <Grid Grid.Row="1"
               Grid.ColumnSpan="2">
