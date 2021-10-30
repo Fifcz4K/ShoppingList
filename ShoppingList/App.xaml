@@ -5,6 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <SolidColorBrush x:Key="TextColor" Color="Black"/>
+        <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#daffff"/>
 
         <Style TargetType="Grid">
             <Setter Property="Background" Value="#FFDADA"/>
@@ -23,7 +24,7 @@
             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#daffff"/>
+            <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
         </Style>
         <Style TargetType="TextBox">

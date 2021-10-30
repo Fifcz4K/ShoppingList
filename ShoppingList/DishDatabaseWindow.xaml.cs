@@ -52,23 +52,76 @@ namespace ShoppingList
         private void dishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dishListView.SelectedItem != null)
-                ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
+            {
+                Dish dish = (dishListView.SelectedItem as Dish);
+                ingredientListView.ItemsSource = dish.GetIngredientList();
+                dishNameTextbox.Text = dish.Name;
+            }
         }
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
         {
-            AddDishWindow addDishWindow = new AddDishWindow();
-            addDishWindow.ShowDialog();
+            if (string.IsNullOrEmpty(dishNameTextbox.Text) || !char.IsLetter(dishNameTextbox.Text[0]))
+            {
+                MessageBox.Show("Dish needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Dish dish = new Dish()
+            {
+                Name = dishNameTextbox.Text
+            };
+
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Insert(dish);
+            }
+
             ReadDatabase();
         }
 
-        private void dishListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void editDishButton_Click(object sender, RoutedEventArgs e)
         {
             if (dishListView.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose a dish", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
 
-            ModifyDishWindow modifyDishWindow = new ModifyDishWindow(dishListView.SelectedItem as Dish);
-            modifyDishWindow.ShowDialog();
+            if (string.IsNullOrEmpty(dishNameTextbox.Text) || !char.IsLetter(dishNameTextbox.Text[0]))
+            {
+                MessageBox.Show("Dish needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Dish dish = (dishListView.SelectedItem as Dish);
+            dish.Name = dishNameTextbox.Text;
+
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Update(dish);
+            }
+
+            ReadDatabase();
+        }
+
+        private void deleteDishButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dishListView.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose a dish", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Dish dish = (dishListView.SelectedItem as Dish);
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                connection.Delete(dish);
+            }
+
             ReadDatabase();
         }
 

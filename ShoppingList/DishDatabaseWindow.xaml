@@ -13,55 +13,75 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="10 5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="20 5 5 5">
-                <StackPanel Margin="0 0 0 10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Content="Find:"/>
-                        <TextBox Grid.Column="1" 
-                                 VerticalAlignment="Center"
-                                 x:Name="dishFilterTextbox"
-                                 TextChanged="dishFilterTextbox_TextChanged"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel>
-                    <ListView x:Name="dishListView"
-                              Height="230"
-                              MouseDoubleClick="dishListView_MouseDoubleClick"
-                              SelectionChanged="dishListView_SelectionChanged">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <uc:DishDatabaseControl Dish="{Binding}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Row="1"
-                        Margin="95 0 80 0"
-                        VerticalAlignment="Center">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Find:"/>
+                    <TextBox Grid.Column="1" 
+                                VerticalAlignment="Center"
+                                x:Name="dishFilterTextbox"
+                                TextChanged="dishFilterTextbox_TextChanged"/>
+                </Grid>
+                <ListView x:Name="dishListView"
+                          Grid.Row="1"
+                          SelectionChanged="dishListView_SelectionChanged">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <uc:DishDatabaseControl Dish="{Binding}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
+                    </Style>
+                </Grid.Resources>
+                <TextBox Grid.ColumnSpan="3"
+                         Margin="5"
+                         x:Name="dishNameTextbox"/>
                 <Button Content="Add dish"
-                        Margin="20 5"
                         x:Name="addDishButton"
+                        Grid.Row="1"
                         Click="addDishButton_Click"/>
-                <Button Content="Close"
-                        Margin="20 5"
-                        x:Name="closeDatabaseButton"
-                        Click="closeDatabaseButton_Click"/>
-            </StackPanel>
+                <Button Content="Save edited"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        x:Name="editDishButton"
+                        Click="editDishButton_Click"/>
+                <Button Content="Delete selected"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        x:Name="deleteDishButton"
+                        Click="deleteDishButton_Click"/>
+            </Grid>
         </Grid>
         <Grid Grid.Column="1"
               Margin="5">
@@ -74,7 +94,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Find:"/>
                         <TextBox Grid.Column="1" 
@@ -108,6 +128,19 @@
                         x:Name="addIngredientButton"
                         Click="addIngredientButton_Click"/>
             </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Close"
+                    x:Name="closeDatabaseButton"
+                    Grid.Column="1"
+                    Margin="5"
+                    Click="closeDatabaseButton_Click"/>
         </Grid>
     </Grid>
 </Window>
