@@ -40,56 +40,55 @@
                         Grid.Column="1"
                         x:Name="deleteDishButton"
                         Click="deleteDishButton_Click"/>
-                <StackPanel Grid.Row="1"
+                <ListView x:Name="dishListview"
+                            Grid.Row="1"
                             Grid.ColumnSpan="3"
                             Margin="5">
-                    <ListView x:Name="dishListview"
-                              Height="584">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock x:Name="dishTextblock"
-                                           Text="{Binding Dish}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    <ListView.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock FontWeight="Bold"
-                                               FontSize="14"
-                                               FontStyle="Italic"
-                                               Text="{Binding Name}"/>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListView.GroupStyle>
-                    </ListView>
-                </StackPanel>
-            </Grid>
-        <StackPanel Grid.Column="1"
-                    Margin="5">
-            <ListView x:Name="ingredientListview"
-                      Height="630"
-                      Foreground="Black">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Ingredient" Width="300" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Count" Width="50" DisplayMemberBinding="{Binding Counter}"/>
-                    </GridView>
-                </ListView.View>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="dishTextblock"
+                                        Text="{Binding Dish}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock FontWeight="Bold"
-                                           FontSize="13"
-                                           FontStyle="Italic"
-                                           Text="{Binding Name}"/>
+                                            FontSize="14"
+                                            FontStyle="Italic"
+                                            Text="{Binding Name}"/>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
                 </ListView.GroupStyle>
-            </ListView>
-        </StackPanel>
+                </ListView>
+            </Grid>
+        <ListView x:Name="ingredientListview"
+                  Height="630"
+                  Foreground="Black"
+                  Grid.Column="1"
+                  Margin="10 5"
+                  Loaded="ingredientListview_Loaded"
+                  Width="400">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Ingredient" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Count" Width="65" DisplayMemberBinding="{Binding Counter}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold"
+                                        FontSize="13"
+                                        FontStyle="Italic"
+                                        Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
     </Grid>
 </Window>

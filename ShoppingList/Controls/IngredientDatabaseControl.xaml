@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ShoppingList.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="200">
-    <Grid Background="#35E6B2BA"
+    <Grid Background="#40ffdada"
           Margin="0 0 0 2">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>

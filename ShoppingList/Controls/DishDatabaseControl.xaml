@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:ShoppingList.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="200">
-    <Grid Background="#35E6B2BA"
+    <Grid Background="#40ffdada"
           Margin="0 0 0 2">
         <StackPanel>
-            <TextBlock Text="Ingredient"
+            <TextBlock Text="Dish"
                        FontSize="15"
                        FontWeight="Bold"
                        VerticalAlignment="Center"

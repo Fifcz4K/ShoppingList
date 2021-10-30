@@ -112,5 +112,19 @@ namespace ShoppingList
             updateDishList(null);
             updateIngredientList();
         }
+
+        private void ingredientListview_Loaded(object sender, RoutedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth;
+            var col1 = 0.76;
+            var col2 = 0.15;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+        }
+
     }
 }
