@@ -14,29 +14,26 @@
         </Grid.ColumnDefinitions>
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="15*"/>
                 </Grid.RowDefinitions>
-                <Button Content="+"
+                <Button Content="Add dish"
                         Margin="5"
-                        Padding="1 0 0 4"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        FontSize="17"
-                        FontWeight="Bold"
+                        FontSize="13"
                         x:Name="addDishButton"
                         Click="addDishButton_Click"/>
-                <Button Content="-"
+                <Button Content="Delete dish"
                         Margin="5"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        FontSize="17"
-                        FontWeight="Bold"
+                        FontSize="13"
                         Grid.Column="1"
                         x:Name="deleteDishButton"
                         Click="deleteDishButton_Click"/>
@@ -71,6 +68,11 @@
                   Margin="10 5"
                   Loaded="ingredientListview_Loaded"
                   Width="400">
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ingredient" Width="200" DisplayMemberBinding="{Binding Name}"/>
@@ -82,13 +84,19 @@
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock FontWeight="Bold"
-                                        FontSize="13"
-                                        FontStyle="Italic"
-                                        Text="{Binding Name}"/>
+                                       FontSize="13"
+                                       FontStyle="Italic"
+                                       Text="{Binding Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </ListView.GroupStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock x:Name="ingredientTextblock"
+                               Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </Window>

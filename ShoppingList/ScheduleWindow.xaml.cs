@@ -125,6 +125,5 @@ namespace ShoppingList
             gView.Columns[0].Width = workingWidth * col1;
             gView.Columns[1].Width = workingWidth * col2;
         }
-
     }
 }
