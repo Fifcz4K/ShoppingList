@@ -44,11 +44,13 @@
                 <Button x:Name="addDishButton"
                         Grid.Row="1"
                         Grid.Column="1"
-                        Content="Add dish"/>
+                        Content="Add dish"
+                        Click="addDishButton_Click"/>
                 <Button x:Name="deleteDishButton"
                         Grid.Row="1"
                         Grid.Column="2"
-                        Content="Delete dish"/>
+                        Content="Delete dish"
+                        Click="deleteDishButton_Click"/>
             </Grid>
             <ListView x:Name="dishListview"
                       Grid.Row="1"

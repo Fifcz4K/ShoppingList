@@ -106,30 +106,6 @@ namespace ShoppingList
             }
         }
 
-        private void addDishButton_Click(object sender, RoutedEventArgs e)
-        {
-            ScheduleDish newDish = new ScheduleDish();
-            newDish.Dish.Name = "None";
-            AddScheduleDishWindow addScheduleDishWindow = new AddScheduleDishWindow(ref newDish);
-            addScheduleDishWindow.ShowDialog();
-
-            if (newDish.Dish.Name == "None")
-                return;
-
-            updateDishList(newDish);
-            updateIngredientList();
-        }
-
-        private void deleteDishButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (dishListview.SelectedItem == null)
-                return;
-
-            scheduledList.Remove(dishListview.SelectedItem as ScheduleDish);
-            updateDishList(null);
-            updateIngredientList();
-        }
-
         private void ingredientListview_Loaded(object sender, RoutedEventArgs e)
         {
             ListView listView = sender as ListView;
@@ -156,6 +132,38 @@ namespace ShoppingList
         private void deleteIngredientButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void addDishButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (scheduleDishCombobox.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose a dish", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (dayCombobox.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose a day", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ScheduleDish newDish = new ScheduleDish();
+            newDish.Dish = scheduleDishCombobox.SelectedItem as Dish;
+            newDish.Day = (Days)dayCombobox.SelectedItem;
+
+            updateDishList(newDish);
+            updateIngredientList();
+        }
+
+        private void deleteDishButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dishListview.SelectedItem == null)
+                return;
+
+            scheduledList.Remove(dishListview.SelectedItem as ScheduleDish);
+            updateDishList(null);
+            updateIngredientList();
         }
     }
 }
