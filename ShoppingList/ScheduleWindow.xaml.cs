@@ -125,5 +125,20 @@ namespace ShoppingList
             gView.Columns[0].Width = workingWidth * col1;
             gView.Columns[1].Width = workingWidth * col2;
         }
+
+        private void addIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deleteIngredientButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -12,58 +12,66 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-            <Grid Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Content="Add dish"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="Margin" Value="5 2"/>
+                    </Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="5 2"/>
+                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
+                    </Style>
+                </Grid.Resources>
+                <ComboBox Grid.ColumnSpan="3"
+                          x:Name="scheduleDishCombobox"/>
+                <ComboBox x:Name="dayCombobox"
+                          Grid.Row="1"/>
+                <Button x:Name="addDishButton"
+                        Grid.Row="1"
                         Grid.Column="1"
-                        Margin="5"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        FontSize="13"
-                        x:Name="addDishButton"
-                        Click="addDishButton_Click"/>
-                <Button Content="Delete dish"
-                        Margin="5"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        FontSize="13"
-                        Grid.Column="3"
-                        x:Name="deleteDishButton"
-                        Click="deleteDishButton_Click"/>
-                <ListView x:Name="dishListview"
-                            Grid.Row="1"
-                            Grid.ColumnSpan="5"
-                            Margin="5">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock x:Name="dishTextblock"
-                                        Text="{Binding Dish}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                        Content="Add dish"/>
+                <Button x:Name="deleteDishButton"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Content="Delete dish"/>
+            </Grid>
+            <ListView x:Name="dishListview"
+                      Grid.Row="1"
+                      Margin="5">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="dishTextblock"
+                                   Text="{Binding Dish}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock FontWeight="Bold"
-                                            FontSize="14"
-                                            FontStyle="Italic"
-                                            Text="{Binding Name}"/>
+                                           FontSize="14"
+                                           FontStyle="Italic"
+                                           Text="{Binding Name}"/>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
                 </ListView.GroupStyle>
-                </ListView>
-            </Grid>
+            </ListView>
+        </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
@@ -82,7 +90,7 @@
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Ingredient" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Item to buy" Width="200" DisplayMemberBinding="{Binding Name}"/>
                         <GridViewColumn Header="Count" Width="65" DisplayMemberBinding="{Binding Counter}"/>
                     </GridView>
                 </ListView.View>
@@ -121,12 +129,14 @@
                     <Style TargetType="TextBox">
                         <Setter Property="Margin" Value="5"/>
                         <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
                     </Style>
                     <Style TargetType="Label">
                         <Setter Property="VerticalAlignment" Value="Center"/>
                     </Style>
                     <Style TargetType="Button">
-                        
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
                     </Style>
                 </Grid.Resources>
                 <Label Content="Name:"/>
@@ -140,9 +150,25 @@
                           Grid.Row="1"
                           Grid.ColumnSpan="4"
                           Margin="5 8"/>
-                <Button Grid.Row="2"
-                        x:Name="addIngredientButton"
-                        Content="Add Ingredient"/>
+                <Grid Grid.Row="2"
+                      Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="addIngredientButton"
+                            Content="Add item"
+                            Click="addIngredientButton_Click"/>
+                    <Button Grid.Column="1"
+                            x:Name="editIngredientButton"
+                            Content="Edit item"
+                            Click="editIngredientButton_Click"/>
+                    <Button Grid.Column="2"
+                            x:Name="deleteIngredientButton"
+                            Content="Delete item"
+                            Click="deleteIngredientButton_Click"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

@@ -26,6 +26,7 @@
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="#daffff"/>

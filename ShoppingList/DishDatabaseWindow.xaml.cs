@@ -132,7 +132,7 @@ namespace ShoppingList
             if ((sender as ListView).SelectedItem != null)
             {
                 Dish dish = dishListView.SelectedItem as Dish;
-                ingredientListView.ItemsSource = dish.GetIngredientList().OrderBy(x => x.Category);
+                ingredientListView.ItemsSource = dish.GetIngredientList();
                 dishNameTextbox.Text = dish.Name;
             }
         }
@@ -244,7 +244,7 @@ namespace ShoppingList
             dish.AddIngredient(new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)ingredientCategoryCombobox.SelectedItem));
 
             UpdateDatabase(dishListView.SelectedItem as Dish);
-            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList().OrderBy(x => x.Category);
+            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
 
             ChangeSelectedItem(DatabaseAction.Add, ingredientListView);
         }
@@ -281,7 +281,7 @@ namespace ShoppingList
             dish.UpdateIngredient(ingredient, new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)ingredientCategoryCombobox.SelectedItem));
 
             UpdateDatabase(dishListView.SelectedItem as Dish);
-            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList().OrderBy(x => x.Category);
+            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
 
             ChangeSelectedItem(DatabaseAction.Edit, ingredientListView, indexOfEditedIngredient);
         }
@@ -306,7 +306,7 @@ namespace ShoppingList
             dish.RemoveIngredient(ingredient);
 
             UpdateDatabase(dishListView.SelectedItem as Dish);
-            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList().OrderBy(x => x.Category);
+            ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList();
 
             ChangeSelectedItem(DatabaseAction.Delete, ingredientListView, indexOfEditedIngredient);
         }
