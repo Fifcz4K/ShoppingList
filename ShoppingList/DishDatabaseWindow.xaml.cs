@@ -16,6 +16,13 @@ using SQLite;
 
 namespace ShoppingList
 {
+    enum DatabaseAction
+    {
+        Add,
+        Edit,
+        Delete
+    };
+
     /// <summary>
     /// Interaction logic for DishDatabaseWindow.xaml
     /// </summary>
@@ -45,6 +52,7 @@ namespace ShoppingList
             if (dishListView.SelectedItem == null)
                 ingredientListView.ItemsSource = null;
         }
+        
         void UpdateDatabase(Dish dish)
         {
             using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
@@ -53,11 +61,77 @@ namespace ShoppingList
                 connection.Update(dish);
             }
         }
+        
+        private void ChangeSelectedItem(DatabaseAction action, ListView listView)
+        {
+            if(action == DatabaseAction.Add)
+            {
+                listView.SelectedItem = listView.Items[listView.Items.Count - 1];
+            }
+        }
+
+        private bool CheckInputName(TextBox textbox)
+        {
+            string textboxName = "";
+            if (textbox == dishNameTextbox)
+            {
+                textboxName = "Dish";
+            }
+            else if (textbox == ingredientNameTextbox)
+            {
+                textboxName = "Ingredient";
+            }
+
+            if (string.IsNullOrEmpty(textbox.Text) || !char.IsLetter(textbox.Text[0]))
+            {
+                MessageBox.Show($"{textboxName} needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void ChangeSelectedItem(DatabaseAction action, ListView listView, int index)
+        {
+            switch(action)
+            {
+                case DatabaseAction.Edit:
+
+                    listView.SelectedItem = listView.Items[index];
+
+                    break;
+
+                case DatabaseAction.Delete:
+
+                    if (listView.Items.Count > 0)
+                    {
+                        if (index == 0)
+                        {
+                            listView.SelectedItem = listView.Items[0];
+                        }
+                        else
+                        {
+                            listView.SelectedItem = listView.Items[index - 1];
+                        }
+                    }
+                    else
+                    {
+                        ingredientNameTextbox.Text = "";
+                        ingredientCategoryCombobox.SelectedItem = null;
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private void dishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((sender as ListView).SelectedItem != null)
             {
-                Dish dish = (dishListView.SelectedItem as Dish);
+                Dish dish = dishListView.SelectedItem as Dish;
                 ingredientListView.ItemsSource = dish.GetIngredientList().OrderBy(x => x.Category);
                 dishNameTextbox.Text = dish.Name;
             }
@@ -75,9 +149,8 @@ namespace ShoppingList
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(dishNameTextbox.Text) || !char.IsLetter(dishNameTextbox.Text[0]))
+            if(CheckInputName(dishNameTextbox))
             {
-                MessageBox.Show("Dish needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -93,6 +166,8 @@ namespace ShoppingList
             }
 
             ReadDatabase();
+
+            ChangeSelectedItem(DatabaseAction.Add, dishListView);
         }
 
         private void editDishButton_Click(object sender, RoutedEventArgs e)
@@ -109,7 +184,8 @@ namespace ShoppingList
                 return;
             }
 
-            Dish dish = (dishListView.SelectedItem as Dish);
+            Dish dish = dishListView.SelectedItem as Dish;
+            int indexOfEditedDish = dishListView.Items.IndexOf(dish);
             dish.Name = dishNameTextbox.Text;
 
             using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
@@ -119,6 +195,8 @@ namespace ShoppingList
             }
 
             ReadDatabase();
+
+            ChangeSelectedItem(DatabaseAction.Edit, dishListView, indexOfEditedDish);
         }
 
         private void deleteDishButton_Click(object sender, RoutedEventArgs e)
@@ -129,17 +207,18 @@ namespace ShoppingList
                 return;
             }
 
-            Dish dish = (dishListView.SelectedItem as Dish);
+            Dish dish = dishListView.SelectedItem as Dish;
+            int indexOfDeletedDish = dishListView.Items.IndexOf(dish);
+
             using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
             {
                 connection.CreateTable<Dish>();
                 connection.Delete(dish);
             }
 
-            ingredientNameTextbox.Text = "";
-            ingredientCategoryCombobox.SelectedItem = null;
-
             ReadDatabase();
+
+            ChangeSelectedItem(DatabaseAction.Delete, dishListView, indexOfDeletedDish);
         }
 
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
@@ -150,9 +229,8 @@ namespace ShoppingList
                 return;
             }
 
-            if (string.IsNullOrEmpty(ingredientNameTextbox.Text) || !char.IsLetter(ingredientNameTextbox.Text[0]))
+            if(CheckInputName(ingredientNameTextbox))
             {
-                MessageBox.Show("Ingredient needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -167,6 +245,8 @@ namespace ShoppingList
 
             UpdateDatabase(dishListView.SelectedItem as Dish);
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList().OrderBy(x => x.Category);
+
+            ChangeSelectedItem(DatabaseAction.Add, ingredientListView);
         }
 
         private void editIngredientButton_Click(object sender, RoutedEventArgs e)
@@ -197,10 +277,13 @@ namespace ShoppingList
 
             Dish dish = dishListView.SelectedItem as Dish;
             Ingredient ingredient = ingredientListView.SelectedItem as Ingredient;
+            int indexOfEditedIngredient = ingredientListView.Items.IndexOf(ingredient);
             dish.UpdateIngredient(ingredient, new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)ingredientCategoryCombobox.SelectedItem));
 
             UpdateDatabase(dishListView.SelectedItem as Dish);
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList().OrderBy(x => x.Category);
+
+            ChangeSelectedItem(DatabaseAction.Edit, ingredientListView, indexOfEditedIngredient);
         }
 
         private void deleteIngredientButton_Click(object sender, RoutedEventArgs e)
@@ -219,10 +302,13 @@ namespace ShoppingList
 
             Dish dish = dishListView.SelectedItem as Dish;
             Ingredient ingredient = ingredientListView.SelectedItem as Ingredient;
+            int indexOfEditedIngredient = ingredientListView.Items.IndexOf(ingredient);
             dish.RemoveIngredient(ingredient);
 
             UpdateDatabase(dishListView.SelectedItem as Dish);
             ingredientListView.ItemsSource = (dishListView.SelectedItem as Dish).GetIngredientList().OrderBy(x => x.Category);
+
+            ChangeSelectedItem(DatabaseAction.Delete, ingredientListView, indexOfEditedIngredient);
         }
 
         private void closeDatabaseButton_Click(object sender, RoutedEventArgs e)
