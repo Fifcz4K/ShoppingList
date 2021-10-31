@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ShoppingList.Classes;
+using SQLite;
 
 namespace ShoppingList
 {
@@ -30,12 +31,28 @@ namespace ShoppingList
     }
     public partial class ScheduleWindow : Window
     {
+        List<Dish> databaseDishList = new List<Dish>();
         List<ScheduleDish> scheduledList = new List<ScheduleDish>();
         List<IngredientShoppingList> ingredientList = new List<IngredientShoppingList>();
         public ScheduleWindow()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            ReadDatabase();
+
+            ingredientCategoryCombobox.ItemsSource = Enum.GetValues(typeof(IngredientCategory)).Cast<IngredientCategory>();
+            dayCombobox.ItemsSource = Enum.GetValues(typeof(Days)).Cast<Days>();
+            scheduleDishCombobox.ItemsSource = databaseDishList;
+        }
+
+        private void ReadDatabase()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(App.databasePath))
+            {
+                connection.CreateTable<Dish>();
+                databaseDishList = connection.Table<Dish>().ToList();
+            }
         }
 
         private void updateDishList(ScheduleDish newDish)
