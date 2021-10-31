@@ -128,14 +128,14 @@
                 <Grid.Resources>
                     <Style TargetType="TextBox">
                         <Setter Property="Margin" Value="5"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
                     </Style>
                     <Style TargetType="Label">
                         <Setter Property="VerticalAlignment" Value="Center"/>
                     </Style>
                     <Style TargetType="Button">
-                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Margin" Value="5 3"/>
                         <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
                     </Style>
                 </Grid.Resources>
@@ -149,7 +149,7 @@
                 <ComboBox x:Name="ingredientCategoryCombobox"
                           Grid.Row="1"
                           Grid.ColumnSpan="4"
-                          Margin="5 8"/>
+                          Margin="5"/>
                 <Grid Grid.Row="2"
                       Grid.ColumnSpan="4">
                     <Grid.ColumnDefinitions>
