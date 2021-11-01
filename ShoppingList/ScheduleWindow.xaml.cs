@@ -22,6 +22,7 @@ namespace ShoppingList
     public class IngredientShoppingList : Ingredient
     {
         public UInt16 Counter { get; set; }
+        
         public IngredientShoppingList(Ingredient ingredient) : base(ingredient.Name, ingredient.Category)
         {
             Counter = 1;
@@ -72,6 +73,17 @@ namespace ShoppingList
 
         private void updateIngredientList()
         {
+            if (ingredientList != null)
+            {
+                ingredientListview.ItemsSource = ingredientList.OrderBy(x => x.Category).ToList();
+                CollectionView ingredientView = (CollectionView)CollectionViewSource.GetDefaultView(ingredientListview.ItemsSource);
+                PropertyGroupDescription ingredientGroupDescription = new PropertyGroupDescription("Category");
+                ingredientView.GroupDescriptions.Add(ingredientGroupDescription);
+            }
+        }
+
+        private void updateIngredientListFromDishList()
+        {
             if(scheduledList.Count == 0)
             {
                 ingredientListview.ItemsSource = null;
@@ -97,13 +109,7 @@ namespace ShoppingList
                 }
             }
 
-            if(ingredientList != null)
-            {
-                ingredientListview.ItemsSource = ingredientList.OrderBy(x => x.Category).ToList();
-                CollectionView ingredientView = (CollectionView)CollectionViewSource.GetDefaultView(ingredientListview.ItemsSource);
-                PropertyGroupDescription ingredientGroupDescription = new PropertyGroupDescription("Category");
-                ingredientView.GroupDescriptions.Add(ingredientGroupDescription);
-            }
+            updateIngredientList();
         }
 
         private void ingredientListview_Loaded(object sender, RoutedEventArgs e)
@@ -119,19 +125,72 @@ namespace ShoppingList
             gView.Columns[1].Width = workingWidth * col2;
         }
 
+        private bool checkIngredientInputs()
+        {
+            if (ingredientCategoryCombobox.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose an item category", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(ingredientNameTextbox.Text) || !char.IsLetter(ingredientNameTextbox.Text[0]))
+            {
+                MessageBox.Show("Item needs a valid name", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(ingredientCountTextbox.Text) || !ingredientCountTextbox.Text.All(char.IsDigit))
+            {
+                MessageBox.Show("Item needs a valid count", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return true;
+            }
+
+            return false;
+        }
+
         private void addIngredientButton_Click(object sender, RoutedEventArgs e)
         {
+            if(checkIngredientInputs())
+                return;
 
+            Ingredient tempIngredient = new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)ingredientCategoryCombobox.SelectedItem);
+            IngredientShoppingList tempShoppingIngredient = new IngredientShoppingList(tempIngredient);
+            tempShoppingIngredient.Counter = ushort.Parse(ingredientCountTextbox.Text);
+
+            ingredientList.Add(tempShoppingIngredient);
+
+            updateIngredientList();
         }
 
         private void editIngredientButton_Click(object sender, RoutedEventArgs e)
         {
+            if(ingredientListview.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose an item", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            if (checkIngredientInputs())
+                return;
+
+            int index = ingredientList.IndexOf(ingredientListview.SelectedItem as IngredientShoppingList);
+            ingredientList[index].Name = ingredientNameTextbox.Text;
+            ingredientList[index].Counter = ushort.Parse(ingredientCountTextbox.Text);
+            ingredientList[index].Category = (IngredientCategory)ingredientCategoryCombobox.SelectedItem;
+
+            updateIngredientList();
         }
 
         private void deleteIngredientButton_Click(object sender, RoutedEventArgs e)
         {
+            if (ingredientListview.SelectedItem == null)
+            {
+                MessageBox.Show("You have to choose an item", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            ingredientList.Remove(ingredientListview.SelectedItem as IngredientShoppingList);
+            updateIngredientList();
         }
 
         private void addDishButton_Click(object sender, RoutedEventArgs e)
@@ -153,7 +212,7 @@ namespace ShoppingList
             newDish.Day = (Days)dayCombobox.SelectedItem;
 
             updateDishList(newDish);
-            updateIngredientList();
+            updateIngredientListFromDishList();
         }
 
         private void deleteDishButton_Click(object sender, RoutedEventArgs e)
@@ -163,7 +222,18 @@ namespace ShoppingList
 
             scheduledList.Remove(dishListview.SelectedItem as ScheduleDish);
             updateDishList(null);
-            updateIngredientList();
+            updateIngredientListFromDishList();
+        }
+
+        private void ingredientListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if((sender as ListView).SelectedItem != null)
+            {
+                IngredientShoppingList temp = (sender as ListView).SelectedItem as IngredientShoppingList;
+                ingredientNameTextbox.Text = temp.Name;
+                ingredientCountTextbox.Text = temp.Counter.ToString();
+                ingredientCategoryCombobox.SelectedItem = temp.Category;
+            }
         }
     }
 }

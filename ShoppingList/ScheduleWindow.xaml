@@ -82,6 +82,7 @@
             </Grid.RowDefinitions>
             <ListView x:Name="ingredientListview"
                       Loaded="ingredientListview_Loaded"
+                      SelectionChanged="ingredientListview_SelectionChanged"
                       Width="Auto"
                       Margin="5"
                       Grid.ColumnSpan="3">
