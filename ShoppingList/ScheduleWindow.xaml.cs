@@ -123,11 +123,19 @@ namespace ShoppingList
             if(checkIngredientInputs())
                 return;
 
-            Ingredient tempIngredient = new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)ingredientCategoryCombobox.SelectedItem);
-            IngredientShoppingList tempShoppingIngredient = new IngredientShoppingList(tempIngredient);
-            tempShoppingIngredient.Counter = ushort.Parse(ingredientCountTextbox.Text);
+            int index = ingredientList.FindIndex(x => x.Name == ingredientNameTextbox.Text);
+            if(index == -1)
+            {
+                Ingredient tempIngredient = new Ingredient(ingredientNameTextbox.Text, (IngredientCategory)ingredientCategoryCombobox.SelectedItem);
+                IngredientShoppingList tempShoppingIngredient = new IngredientShoppingList(tempIngredient);
+                tempShoppingIngredient.Counter = ushort.Parse(ingredientCountTextbox.Text);
+                ingredientList.Add(tempShoppingIngredient);
+            }
+            else
+            {
+                ingredientList[index].Counter += ushort.Parse(ingredientCountTextbox.Text);
+            }
 
-            ingredientList.Add(tempShoppingIngredient);
 
             updateIngredientList();
         }
