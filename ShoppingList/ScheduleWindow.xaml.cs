@@ -82,36 +82,6 @@ namespace ShoppingList
             }
         }
 
-        private void updateIngredientListFromDishList()
-        {
-            if(scheduledList.Count == 0)
-            {
-                ingredientListview.ItemsSource = null;
-                return;
-            }
-
-            List<Dish> tempDishList = new List<Dish>();
-            tempDishList = scheduledList.Select(x => x.Dish).ToList();
-            ingredientList.Clear();
-            foreach (var item in tempDishList)
-            {
-                foreach (var ingredient in item.GetIngredientList())
-                {
-                    int index = ingredientList.FindIndex(x => x.Name == ingredient.Name);
-                    if (index == -1)
-                    {
-                        ingredientList.Add(new IngredientShoppingList(ingredient));
-                    }
-                    else
-                    {
-                        ingredientList[index].Counter++;
-                    }
-                }
-            }
-
-            updateIngredientList();
-        }
-
         private void ingredientListview_Loaded(object sender, RoutedEventArgs e)
         {
             ListView listView = sender as ListView;
@@ -207,12 +177,27 @@ namespace ShoppingList
                 return;
             }
 
+            int index = 0;
             ScheduleDish newDish = new ScheduleDish();
             newDish.Dish = scheduleDishCombobox.SelectedItem as Dish;
             newDish.Day = (Days)dayCombobox.SelectedItem;
 
             updateDishList(newDish);
-            updateIngredientListFromDishList();
+
+            foreach (Ingredient ingredient in newDish.Dish.GetIngredientList())
+            {
+                index = ingredientList.FindIndex(x => x.Name == ingredient.Name);
+                if (index == -1)
+                {
+                    ingredientList.Add(new IngredientShoppingList(ingredient));
+                }
+                else
+                {
+                    ingredientList[index].Counter++;
+                }
+            }
+
+            updateIngredientList();
         }
 
         private void deleteDishButton_Click(object sender, RoutedEventArgs e)
@@ -220,9 +205,28 @@ namespace ShoppingList
             if (dishListview.SelectedItem == null)
                 return;
 
-            scheduledList.Remove(dishListview.SelectedItem as ScheduleDish);
+            int index = 0;
+            ScheduleDish dishToDelete = dishListview.SelectedItem as ScheduleDish;
+            scheduledList.Remove(dishToDelete);
+
+            foreach (Ingredient ingredient in dishToDelete.Dish.GetIngredientList())
+            {
+                index = ingredientList.FindIndex(x => x.Name == ingredient.Name);
+                if (index != -1)
+                {
+                    if(ingredientList[index].Counter > 1)
+                    {
+                        ingredientList[index].Counter--;
+                    }
+                    else
+                    {
+                        ingredientList.RemoveAt(index);
+                    }
+                }
+            }
+
             updateDishList(null);
-            updateIngredientListFromDishList();
+            updateIngredientList();
         }
 
         private void ingredientListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
